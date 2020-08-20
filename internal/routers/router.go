@@ -1,7 +1,7 @@
 package routers
 
 import (
-	v1 "github.com/frankie/go-app/models/api/v1"
+	v1 "github.com/frankie/go-app/internal/models/api/v1"
 	"github.com/frankie/go-app/pkg/setting"
 	"github.com/gin-gonic/gin"
 )

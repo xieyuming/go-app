@@ -2,7 +2,7 @@ package v1
 
 import (
 	"github.com/astaxie/beego/validation"
-	"github.com/frankie/go-app/models"
+	models2 "github.com/frankie/go-app/internal/models"
 	"github.com/frankie/go-app/pkg/ecode"
 	"github.com/frankie/go-app/pkg/setting"
 	"github.com/frankie/go-app/pkg/util"
@@ -29,8 +29,8 @@ func GetTags(c *gin.Context) {
 
 	code := ecode.SUCCESS
 
-	data["lists"] = models.GetTags(util.GetPage(c), setting.PageSize, maps)
-	data["total"] = models.GetTagTotal(maps)
+	data["lists"] = models2.GetTags(util.GetPage(c), setting.PageSize, maps)
+	data["total"] = models2.GetTagTotal(maps)
 
 	c.JSON(http.StatusOK, gin.H{
 		"code": code,
@@ -54,9 +54,9 @@ func AddTag(c *gin.Context) {
 
 	code := ecode.INVALID_PARAMS
 	if !valid.HasErrors() {
-		if !models.ExistTagByName(name) {
+		if !models2.ExistTagByName(name) {
 			code = ecode.SUCCESS
-			models.AddTag(name, state, createdBy)
+			models2.AddTag(name, state, createdBy)
 		} else {
 			code = ecode.ERROR_EXIST_TAG
 		}

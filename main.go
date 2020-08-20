@@ -2,8 +2,8 @@ package main
 
 import (
 	"fmt"
+	"github.com/frankie/go-app/internal/routers"
 	"github.com/frankie/go-app/pkg/setting"
-	"github.com/frankie/go-app/routers"
 	"net/http"
 )
 
