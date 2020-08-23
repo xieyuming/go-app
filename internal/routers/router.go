@@ -8,18 +8,10 @@ import (
 
 func InitRouter() *gin.Engine {
 	r := gin.New()
-
 	r.Use(gin.Logger())
-
 	r.Use(gin.Recovery())
 
 	gin.SetMode(setting.RunMode)
-
-	/*	r.GET("/test", func(c *gin.Context) {
-		c.JSON(200, gin.H{
-			"message": "test",
-		})
-	})*/
 
 	apiv1 := r.Group("/api/v1")
 	{
@@ -31,6 +23,30 @@ func InitRouter() *gin.Engine {
 		apiv1.PUT("/tags/:id", v1.EditTag)
 		//删除指定标签
 		apiv1.DELETE("/tags/:id", v1.DeleteTag)
+	}
+
+	return r
+}
+
+func NewRouter() *gin.Engine {
+	r := gin.New()
+	r.Use(gin.Logger())
+	r.Use(gin.Recovery())
+
+	apiv1 := r.Group("/api/v1")
+	{
+		apiv1.GET("/tags")
+		apiv1.POST("/tags")
+		apiv1.PUT("/tags/:id")
+		apiv1.DELETE("/tags/:id")
+		apiv1.PATCH("/tags/:id/state")
+
+		apiv1.GET("/articles")
+		apiv1.GET("/articles/:id")
+		apiv1.POST("/articles")
+		apiv1.PUT("/articles/:id")
+		apiv1.DELETE("/articles/:id")
+		apiv1.PATCH("/articles/:id/state")
 	}
 
 	return r
