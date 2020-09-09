@@ -43,8 +43,11 @@ func init() {
 	}
 }
 
+// @title 博客系统
+// @version 1.0
+// @description go实战
+// @termsOfService https://github.com/xieyuming/go-app.git
 func main() {
-
 	router := routers.NewRouter()
 
 	s := &http.Server{

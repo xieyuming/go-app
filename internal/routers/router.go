@@ -1,14 +1,21 @@
 package routers
 
 import (
-	v1 "github.com/frankie/go-app/internal/models/api/v1"
+	_ "github.com/frankie/go-app/docs"
+	"github.com/frankie/go-app/internal/middleware"
+	v1 "github.com/frankie/go-app/internal/routers/api/v1"
 	"github.com/gin-gonic/gin"
+	swaggerFiles "github.com/swaggo/files"
+	ginSwagger "github.com/swaggo/gin-swagger"
 )
 
 func NewRouter() *gin.Engine {
 	r := gin.New()
 	r.Use(gin.Logger())
 	r.Use(gin.Recovery())
+	r.Use(middleware.Translations())
+	url := ginSwagger.URL("http://127.0.0.1:8000/swagger/doc.json")
+	r.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler, url))
 
 	apiv1 := r.Group("/api/v1")
 	{

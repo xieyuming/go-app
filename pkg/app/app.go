@@ -1,6 +1,7 @@
 package app
 
 import (
+	"github.com/frankie/go-app/pkg/ecode"
 	"github.com/gin-gonic/gin"
 	"net/http"
 )
@@ -24,4 +25,27 @@ func (r *Respone) ToResponse(data interface{}) {
 		data = gin.H{}
 	}
 	r.Ctx.JSON(http.StatusOK, data)
+}
+
+func (r *Respone) ToResponseList(list interface{}, totalRows int) {
+	r.Ctx.JSON(http.StatusOK, gin.H{
+		"list": list,
+		"pager": Pager{
+			Page:      GetPage(r.Ctx),
+			PageSize:  GetPageSize(r.Ctx),
+			TotalRows: totalRows,
+		},
+	})
+}
+
+func (r *Respone) ToErrorResponse(err *ecode.Error) {
+	response := gin.H{
+		"code": err.Code(),
+		"msg":  err.Msg()}
+	details := err.Detauls()
+	if len(details) > 0 {
+		response["details"] = details
+	}
+
+	r.Ctx.JSON(err.StatusCode(), response)
 }
